@@ -1,0 +1,132 @@
+#######################
+# icanimend.py
+# Emerson Yu
+# Final Project
+# This is the last part of the IC animation; a 2D animation exemplifying OPC.
+#######################
+
+from icanimintro import pg, Animation, arange
+from random import randint
+
+def disintegrate(img,left,top,right,bottom,deg=10000):
+    '''Pixelated disintegration effect on select area of a Surface. Top starts from 0.'''
+    for i in arange(deg):
+        x= randint(left,right)
+        y= randint(top,bottom)
+        temp = img.get_at((x,y))
+        othX = randint(left,right)
+        othY = randint(top,bottom)
+        other = img.get_at((othX,othY))
+        img.set_at((x,y),other)
+        img.set_at((othX,othY),temp)
+
+def main():
+    '''Driver program for the animation.'''
+    pg.init() # ignore pylint, this works fine
+    a = Animation(1000,1000,40,'background.jpg') # make sure you are in the right working directory (cd icanim)
+    input('Hit enter to start.')
+    # a.add_text('cap1','',x=20) # for testing
+    # a.add_text('cap2','',x=20,y=34) # for testing
+    # a.add_text('cap3','',x=20,y=68) # for testing
+    a.add_fade_text('section','4. Optical Proximity Correction',x=356,y=485)
+    a.sleep(2)
+    a.erase('section')
+    a.add_fade_text('cap1','One method of enhancing resolution is optical proximity correction (OPC), which falls',x=20)
+    a.add_fade_text('cap2','under computational lithography, as mentioned earlier.',x=20,y=34)
+    a.sleep(3)
+    a.fade('cap2')
+    a.replace_text('cap1','OPC involves altering the mask to get the projected image closer to the desired design.')
+    a.sleep(2)
+    a.replace_text('cap1','This is necessary because of optical effects and nonideal conditions, including:')
+    a.add_fade_text('pt1',' - uncollected diffracted light',x=20,y=34)
+    a.add_fade_text('pt2',' - interference',x=20,y=68)
+    a.add_fade_text('pt3',' - aberrations',x=20,y=102)
+    a.add_fade_text('pt4',' - lenses being innate low-pass filters, etc.',x=20,y=136)
+    a.sleep(3)
+    for i in arange(4,0,-1):
+        a.erase('pt'+str(i))
+    a.replace_text('cap1','Without OPC, a pattern on a mask may look like the left')
+    a.add_fade('opc1.png')
+    a.replace_text('cap2','while the projected image may look like the right.',mode=0,vis=False)
+    a.move('cap2',x=455,mode=0)
+    a.fade('cap2')
+    a.add_fade('opc2.png',x=580)
+    a.add_fade('opc4.png',y=870)
+    a.sleep(2)
+    a.fade('cap2')
+    a.move('cap2',x=20,mode=0)
+    a.replace_text('cap1','Unwanted line shrinking and corner rounding occurred. How can we fix this?')
+    a.add_fade('opc3.png',x=700,y=-40)
+    a.sleep(2)
+    a.replace_text('cap1','There are two main classifications of OPC: rule-based and model-based.')
+    a.replace_text('cap2','Both use EDA tools.',mode=0,vis=False)
+    a.fade('cap2')
+    a.sleep(3)
+    a.fade('cap2')
+    a.replace_text('cap1','Rule-based OPC uses predetermined lookup tables of biases by feature.')
+    a.replace_text('cap2','(biasing is just adding area selectively)',mode=0,vis=False)
+    a.fade('cap2')
+    a.add_fade('opc5.png')
+    a.erase('opc1',0)
+    a.erase('opc2',0)
+    a.sleep(3)
+    a.add_fade('eb0.png')
+    a.erase('opc5')
+    a.fade('cap2')
+    a.replace_text('cap1','Model-based OPC is more flexible but also more expensive, as it is iterative.')
+    a.replace_text('cap2','Each iteration is as follows: simulate, measure error, and correct.',mode=0,vis=False)
+    a.fade('cap2')
+    a.add_fade_text('cap3','It can be further divided into edge-based and pixel-based OPC.',x=20,y=68)
+    a.sleep(5)
+    a.fade('cap3')
+    a.fade('cap2')
+    a.replace_text('cap1','EBOPC breaks up edges or polygons via segmentation for finer tuning.')
+    for i in arange(1,6):
+        a.add_fade('eb'+str(i)+'.png')
+        if i > 1:
+            a.erase('eb'+str(i-1),0)
+    a.sleep(3)
+    a.erase('eb5')
+    a.replace_text('cap1','PBOPC optimizes pixel by pixel, similar to inverse lithography technology.')
+    a.replace_text('cap2','However, this makes masks harder to manufacture.',mode=0,vis=False)
+    a.fade('cap2')
+    disintegrate(a.img_of('eb0'),40,300,190,840)
+    disintegrate(a.img_of('eb0'),320,300,500,840)
+    disintegrate(a.img_of('eb0'),160,480,350,680)
+    a.sleep(0.5)
+    a.refresh()
+    a.add_fade('pb.png',x=580)
+    a.sleep(4)
+    a.fade('cap2')
+    a.erase('eb0',0)
+    a.erase('pb',0)
+    a.add('eb0.png')
+    a.replace_text('cap1','Both rule-based and model-based OPC also utilize assist features.')
+    a.replace_text('cap2','(and/or sub-resolution assist features, which do not get printed themselves)',mode=0,vis=False)
+    a.fade('cap2')
+    a.add_fade('assist.png')
+    a.add_fade_text('ham','hammerhead assist feature',y=280)
+    a.sleep(4)
+    a.erase('ham',0)
+    a.erase('assist',0)
+    a.erase('opc4',0)
+    a.erase('opc3',0)
+    a.erase('eb0')
+    a.fade('cap2')
+    a.replace_text('cap1','Note that mask designs would be broken up into blocks to be processed separately,')
+    a.replace_text('cap2','since files are too large to efficiently process at once.',mode=0,vis=False)
+    a.replace_text('cap3','Files are thus viewed in special formats using special EDA tools.',mode=0,vis=False)
+    a.fade('cap2')
+    a.fade('cap3')
+    a.sleep(5)
+    a.fade('cap3')
+    a.fade('cap2')
+    a.fade('cap1')
+    a.add_fade_text('title','Intro to IC',x=350,y=450,font=pg.font.SysFont('cambria',72))
+    a.add_fade_text('thanks','Thank you for watching.',x=388,y=545)
+    a.add_fade_text('bye','fin.',x=490,y=579)
+    a.sleep(5)
+    pg.quit()
+
+if __name__ == '__main__':
+    main()
