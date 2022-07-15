@@ -4,7 +4,7 @@ An animation (mostly slideshow style) that delves into the basics of the IC indu
 Recording link of the entire project with music and captions (with corrections) added in post: https://youtu.be/QrnPwcHAjC4
 
 ## Sources
-### . Semiconductors
+### 1. Semiconductors
 * https://www.anandtech.com/show/8223/an-introduction-to-semiconductor-physics-technology-and-industry
 * http://faculty.chem.queensu.ca/people/faculty/mombourquette/FirstYrChem/Molecular/bands/
 * https://en.wikipedia.org/wiki/Valence_and_conduction_bands
